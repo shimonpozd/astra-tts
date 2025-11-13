@@ -1,0 +1,69 @@
+@"
+# --- Python virtualenvs
+**/.venv/
+**/venv/
+**/env/
+**/venv39/ 
+
+
+
+/node_modules
+/public/sefaria-cache
+dist/
+
+# --- Python caches
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+s
+# --- Node/JS
+**/node_modules/
+**/dist/
+**/.next/
+**/.vite/
+**/.turbo/
+**/coverage/
+
+# --- Логи/кэши/временные
+logs/
+**/*.log
+**/*.pid
+**/.cache/
+**/tmp/
+**/temp/
+
+# --- Данные/модели/тяжёлые артефакты
+
+datasets/
+models/
+checkpoints/
+**/*.onnx
+**/*.pt
+**/*.pth
+**/*.bin
+**/*.wav
+**/*.mp3
+**/*.flac
+**/*.ogg
+**/*.zip
+**/*.7z
+
+# --- Секреты/переменные окружения
+.env
+.env.*
+**/.env
+**/.env.*
+!*.env.example
+
+# --- ОС/IDE мусор
+.vscode/
+.idea/
+*.code-workspace
+.DS_Store
+Thumbs.db
+"@ | Out-File -Encoding utf8 .gitignore
+
+
+!astra-web-client/src/data/

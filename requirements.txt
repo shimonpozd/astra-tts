@@ -1,0 +1,12 @@
+# -c ../constraints.txt
+fastapi
+uvicorn[standard]
+TTS
+requests
+redis
+sounddevice
+elevenlabs
+pyaudio
+python-dotenv
+numpy==1.22.0
+orpheus-speech
