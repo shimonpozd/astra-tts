@@ -1,12 +1,8 @@
 # -c ../constraints.txt
 fastapi
 uvicorn[standard]
-TTS
 requests
-redis
-sounddevice
+httpx
 elevenlabs
-pyaudio
 python-dotenv
-numpy==1.26.4
-orpheus-speech
+redis

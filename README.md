@@ -1,6 +1,6 @@
 # TTS Dispatcher Service
 
-This directory contains the standalone FastAPI-based TTS dispatcher used by the Astra stack. It exposes the same `/stream`, `/tts/synthesize`, `/tts/voices`, and `/speak` endpoints that the rest of the project already depends on, and it can proxy between XTTS, ElevenLabs, Orpheus, and Yandex SpeechKit based on runtime configuration.
+This directory contains the standalone FastAPI-based TTS dispatcher used by the Astra stack. It exposes the same `/stream`, `/tts/synthesize`, `/tts/voices`, and `/speak` endpoints that the rest of the project already depends on, and it can proxy between ElevenLabs and Yandex SpeechKit (the only providers we deploy on the server).
 
 ## Features
 
@@ -20,12 +20,10 @@ pip install -r requirements.txt
 
 ## Configuration
 
-Environment variables are read from `audio.settings` (which merges `config/defaults.toml` + overrides + `overrides.toml`). Key overrides:
+Environment variables are read from `audio.settings` (which merges `config/defaults.toml` + overrides + `overrides.toml`). Key overrides (only ElevenLabs and Yandex are required in production):
 
 - `ASTRA_TTS_PROVIDER` – one of `xtts`, `elevenlabs`, `orpheus`, `yandex`.
-- `XTTS_API_URL`, `XTTS_SPEAKER_WAV`.
 - `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`, `ELEVENLABS_MODEL_ID`, `ELEVENLABS_OUTPUT_FORMAT`.
-- `ORPHEUS_API_URL`.
 - `YANDEX_API_KEY`, `YANDEX_IAM_TOKEN`, `YANDEX_FOLDER_ID`, `YANDEX_VOICE`, `YANDEX_FORMAT`, `YANDEX_SAMPLE_RATE`, `YANDEX_USE_V3_REST`, `YANDEX_SA_KEY_PATH`.
 - `REDIS_URL` (optional; only used if Redis behavior is enabled later).
 
@@ -51,7 +49,7 @@ See `deploy/tts/README.md` for the production-ready recipe (Dockerfile, compose,
 
 ## Testing
 
-Manual tests:
+Manual tests (ElevenLabs + Yandex only):
 
 - `curl -X POST http://localhost:7010/stream -H "Content-Type: application/json" -d '{"text":"Привет","language":"ru"}' > sample.ogg`
-- Adjust `config/overrides.toml` or `.env` for different providers and rerun.
+- Ensure `ELEVENLABS_API_KEY` and `YANDEX_FOLDER_ID` are populated in `deploy/tts/tts.env` or `.env`, then rerun.
