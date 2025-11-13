@@ -8,5 +8,5 @@ sounddevice
 elevenlabs
 pyaudio
 python-dotenv
-numpy==1.22.0
+numpy==1.26.4
 orpheus-speech
