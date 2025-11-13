@@ -23,7 +23,10 @@ from audio.settings import (
 )
 
 import redis
-import sounddevice as sd
+try:
+    import sounddevice as sd
+except ImportError:
+    sd = None
 import uvicorn
 import requests
 import httpx
@@ -172,12 +175,15 @@ def speech_worker():
 
             # Generic playback for numpy audio data
             if audio_np is not None:
-                try:
-                    sd.play(audio_np, samplerate)
-                    time.sleep(len(audio_np) / samplerate * 1.05) # Wait for playback to finish
-                    logger.info("Playback finished.")
-                except Exception as e:
-                    logger.error(f"Error playing audio: {e}")
+                if sd is None:
+                    logger.debug("sounddevice missing; skipping local playback.")
+                else:
+                    try:
+                        sd.play(audio_np, samplerate)
+                        time.sleep(len(audio_np) / samplerate * 1.05)
+                        logger.info("Playback finished.")
+                    except Exception as e:
+                        logger.error(f"Error playing audio: {e}")
 
             state.queue.task_done()
         except Exception as e:
