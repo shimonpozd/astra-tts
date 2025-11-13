@@ -25,7 +25,7 @@ from audio.settings import (
 import redis
 try:
     import sounddevice as sd
-except ImportError:
+except (ImportError, OSError):
     sd = None
 import uvicorn
 import requests
